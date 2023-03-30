@@ -1,0 +1,77 @@
+Unidades de medida
+Densidade -> quantidade de pixels por área
+
+	dp -> pixel de densidade média -> android consegue converter depois de acordo com a densidade de cada tela, mantendo o que vc queria independente
+		da densidade
+	Se usasse pixel uma tela com densidade maior seria muito diferente de uma menor
+	
+	sp -> usada para tamanhos de textos, é boa porque depende do tamanho da fonte configurada no celular android
+		por padrão é o mesmo tamanho do dp
+
+Dependendo da unidade de medida, se não for relativo à densidade, tamanho de fonte do celular etc. pode dar problemas
+
+-------
+
+constraint layout -> forma de organizar elementos na tela, como uma div
+a ideia dele é ir posicionando de forma relativa, seja apontando para a div, outro elemento, algum id etc.
+	precisa ter uma horizontal e vertical pelo menos
+	topo com topo de outro etc.
+
+tamanho -> match_parent -> ocupa tudo que o pai disponibiliza
+		-> wrap_content -> ocupa o tamanho do seu conteúdo
+
+android:id="@+id/money_currency" -> cria id money_currency
+
+arquivos de resources res/values
+	criam arquivos no plural
+	as tags ficam no singular
+	são usadas no sentido de constantes
+
+variáveis do kotlin
+	forma antiga
+		val -> não muda valor
+		var -> muda valor
+	R -> forma de acessar recursos, pasta res
+		R.string
+		R.dimen
+		R.id.toggleButton
+	
+	val toggleButton: Button = findViewById(R.id.toggle_button) -> acessar o botão, forma antiga
+	-> forma ruim porque se tiver muitos elementos fica muito cheio dessas val
+	
+	forma nova é só usar toggle_button.setText etc.
+		forma sintética -> para isso é preciso configurar no build.gradle do module
+		nisso conseguimos adicionar plugins para facilitar digitar código etc.
+		plugin
+			id 'kotlin-android-extensions' -> possibilita usar o kotlin sintético
+	
+	outra forma
+		view binding
+		no gradle adicionar dentro de android
+	
+		buildFeatures {
+			viewBinding true
+		}
+		
+		ele cria para cada xml de layout uma classe com todas os acessos disponíveis
+		ex: ActivityMainBinding
+		
+		lateinit var binding: ActivityMainBinding
+		obs: lateinit -> ser inicializada depois
+		
+		no onCreate
+			binding = ActivityMainBinding.inflate(layoutInflater) -> toda activity tem esse layoutInflater
+				layoutInflater -> usado para desenhar a tela, redesenhar após alterações etc.
+				com esse comando a ActivityMainBinding passa a fazer parte da tela, como ela que vai receber as alterações, ela deve ser referenciada
+				no setContentView
+			binding.oqueVcQuerAcessar
+		
+			setContentView(binding.root) -> passando o binding e referenciando a view pai
+			
+		private val value: String? = null
+		Tem nullsafety no Kotlin para evitar o nullpointer do Java
+		Declarar com ? mostra que pode ser nula, sem ele nunca será nula
+		Usar com ? mostra que só irá executar se não for null
+		value?.length
+	
+		fun

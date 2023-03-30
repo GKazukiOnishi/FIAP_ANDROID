@@ -1,0 +1,26 @@
+Intents
+	Aplicação conseguir conversar com outra
+	Chamar outras activities ou de outros apps
+	
+	Objeto de mensagem para solicitar uma ação a um componente do seu app ou de outro
+		* Inicia Activity
+		* Inicia Service (fica rodando sem ter a tela aberta, backup do whats)
+		* Inicia Broadcast Receiver (permite enviar notificações para o sistema a partir de eventos)
+		(ContentProvider)
+	
+	Classificações:
+		Intent Explícito: Recebe o nome do componente que vai iniciar
+			Ex: para iniciar uma Activity passamos o nome da Activity que queremos abrir
+			
+			Activity A -> roda startActivity e passamos como param um Intent -> Ele inicia a Activity B
+			
+		Implícito: Não recebe o nome do componente, o componente que ele vai iniciar é o usuário que escolhe
+			Ex: Botão de compartilhar que abre uma série de aplicativos para usar para compartilhar
+		
+			Activity A -> roda startActivity sem passar o Intent -> Android System abre uma lista de aplicativos que suporta o tipo de dado
+				passado -> Android pega o Intent definido pelo usuário -> Intent vai rodar o onCrete() e carregar a Activity B
+		
+	
+
+Usar 0dp no layout_width juntto da layout containst para direita e esquerda deixa o conteúdo mais responsivo do que usar match_parent
+

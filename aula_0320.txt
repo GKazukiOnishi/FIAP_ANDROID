@@ -1,0 +1,28 @@
+Activity Lifecycle:
+	Activities: o que são?
+		Componente responsável por mostrar telas e permitir interação com o usuário
+		O main() do Android é a Activity invocando os métodos de ciclo de vida
+	
+	Android-manifest -> tem informações sobre a aplicação
+		Quais activities existem na aplicação
+			<activity
+				android: name=".MainActivity"
+				android:exported="true"> -> indica se a activity será visível para outros aplicativos (Ex: telas que aparecem ao compartilhar
+					-> uma tela com outro aplicativo)
+				<intent-filter>
+					<action android:name="android.intent.action.MAIN" /> -> a primeira que será inicializada
+					<category android:name="android.intent.category.LAUNCHER" /> -> O ícone que inicia a aplicação, levando para essa activity,
+						-> se tivesse mais de uma activity com LAUNCHER ele vai mostrar dois ícones
+				</intent-filter>
+			</activity>
+	
+	Print do ciclo de vida no slide
+		onCreate -> primeiro método a ser executado
+		onStart -> onRestart(), quando o usuário abre a tela após o stop (onRestart depois onStart)
+		onResume -> só depois dele o usuário poderá interagir com a tela, quando o usuário retorna para a tela após ter "pausado" ela
+		onPause -> quando aparece algo na frente (sua tela vai pro foreground, ele perde o foco)
+		onStop -> quando a tela não está mais visível 
+		onDestroy -> se fechar a aplicação
+		...
+	
+	

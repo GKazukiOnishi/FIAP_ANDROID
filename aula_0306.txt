@@ -1,0 +1,27 @@
+onCreate -> método chamado na inicialização da activity
+	chamando a associação de listener dentro dele vai configurar os listeners dos componentes
+	
+enum class ButtonState(val buttonTextResId: Int) { //método construtor
+	SHOW(R.string.show_button_label), HIDE(R.string.hide_button_label) //declarando valores de enum chamando o construtor
+}
+
+when //cláusula tipo o if, chamada de when -> só compara valores direto -> tipo switch case
+
+	when(buttonState) {
+		ButtonState.HIDE_VALUE -> {
+			//faz algo quando é HIDE
+		}
+		ButtonState.SHOW_VALUE -> {
+			//faz algo quando é SHOW
+		}
+	}
+	
+
+R.string.show_button_label -> retorna um Id inteiro, precisa executar getString para acessar o texto
+
+binding.toggleButton.text = if(isShowing) {
+	getString(R.string.show_button_label)
+} else {
+	getString(R.string.hide_button_label)
+}
+
