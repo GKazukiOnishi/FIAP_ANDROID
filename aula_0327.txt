@@ -22,5 +22,5 @@ Intents
 		
 	
 
-Usar 0dp no layout_width juntto da layout containst para direita e esquerda deixa o conteúdo mais responsivo do que usar match_parent
+Usar 0dp no layout_width junto da layout containst para direita e esquerda deixa o conteúdo mais responsivo do que usar match_parent
 

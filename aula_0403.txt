@@ -1,0 +1,7 @@
+Kotlin -> linguagem nullsafe
+	por conta disso se a variável puder ser nula você precisa adicionar o ?.
+	
+		binding.textInputEditTextMessage.text?.clear()
+		
+
+type Any do Kotlin aceita qualquer coisa
