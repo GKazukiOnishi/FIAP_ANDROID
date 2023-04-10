@@ -13,21 +13,44 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ChatGPT"
         tools:targetApi="31">
+<!--        <activity-->
+<!--            android:name=".ChatActivity"-->
+<!--            android:exported="true"> &lt;!&ndash; para ele ser visível &ndash;&gt;-->
+<!--            <intent-filter> &lt;!&ndash; Para o Android saber que a Activity pode ser aberta como uma Action &ndash;&gt;-->
+<!--                <action android:name="android.intent.action.SEND" />-->
+<!--                <category android:name="android.intent.category.DEFAULT" /> &lt;!&ndash; Para ele não ser exibido como ícone executável &ndash;&gt;-->
+<!--                <data android:mimeType="text/plain" /> &lt;!&ndash; A Activity trabalha com texto &ndash;&gt;-->
+<!--            </intent-filter>-->
+<!--        </activity>-->
+<!--        <activity-->
+<!--            android:name=".MainActivity"-->
+<!--            android:exported="true">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                <category android:name="android.intent.category.LAUNCHER" /> &lt;!&ndash; Para ele ser exibido como ícone executável &ndash;&gt;-->
+<!--            </intent-filter>-->
+<!--        </activity>-->
+
         <activity
-            android:name=".ChatActivity"
-            android:exported="true"> <!-- para ele ser visível -->
-            <intent-filter> <!-- Para o Android saber que a Activity pode ser aberta como uma Action -->
-                <action android:name="android.intent.action.SEND" />
-                <category android:name="android.intent.category.DEFAULT" /> <!-- Para ele não ser exibido como ícone executável -->
-                <data android:mimeType="text/plain" /> <!-- A Activity trabalha com texto -->
+            android:name=".presentation.AnswersActivity"
+            android:exported="true"
+            >
+
+            <intent-filter>
+                <action android:name="android.intent.action.SEND"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:mimeType="text/plain"/>
             </intent-filter>
+
         </activity>
+
         <activity
-            android:name=".MainActivity"
+            android:name=".presentation.QuestionsActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" /> <!-- Para ele ser exibido como ícone executável -->
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
     </application>

@@ -36,7 +36,7 @@ class ChatActivity : AppCompatActivity() {
         }
 
         binding.buttonShareMessage.setOnClickListener { //forma de simplificar a chamada
-            val sendIntent: Intent = Intent().apply { //executa algo em cima do shareIntent
+            val sendIntent: Intent = Intent().apply { //executa algo em cima do sendIntent
                 action = Intent.ACTION_SEND //ação de envio -> usada em Intent implícitas para definir o que ela
                     //faz e o sistema android saber quais aplicativos vai dar para usar, só Actions do tipo
                     //ACTION_SEND podem ser abertas

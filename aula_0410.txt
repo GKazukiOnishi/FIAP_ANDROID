@@ -1,0 +1,36 @@
+Kotlin
+	data class TalkModel -> cria uma classe com getter e setters
+	
+	data class TalkModel(
+		val question: String,
+		val answers: List<AnswerModel>
+	): Serializable
+	
+	data class AnswerModel(
+		val answer: String,
+		val hasShareAction: Boolean = false
+	): Serializable
+
+
+Cada Activity = Uma tela -> Actitivy é o arquivo Kotlin
+Os .xml de layout não são uma por Activity, geralmente tem 1 principal, mas podem ter várias que montem a tela final
+	nisso podemos criar view_algumacoisa.xml para compor a tela
+
+Componente RecyclerView é otimizado e ajuda a reduzir o consumo do App
+	ao invés de ir crescendo a lista e sair criando células, ele vai reutilizando a célula
+	
+Criamos uma classe Adapter para controlar o conteúdo da lista
+
+layoultInflater -> cara que monta toda a tela
+
+No adapter não temos acesso a ele direto, então precisamos criar
+
+Contexto -> No caso das Activities, os componentes dentro dela tem como contexto a view
+	ao acessar o contexto temos acesso à activity
+	
+inner class -> forma de criar a classe dentro de outra, para evitar criar ouro arquivo
+
+RecyclerView tem layouts diferentes
+	Grid -> células de mesmo tamanho
+	Linear -> uma em baixo da outra
+	Staggered -> células de tamanhos diferentes 

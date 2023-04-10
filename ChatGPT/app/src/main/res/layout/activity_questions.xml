@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.QuestionsActivity"
+    >
+
+    <TextView
+        android:id="@+id/title_question_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/question_title_label"
+        android:layout_marginHorizontal="@dimen/margin_medium"
+        android:layout_marginVertical="@dimen/margin_large"
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <!--
+        0dp só funciona se estiverem definidas as constraint layout horizonais ou verticais
+        0dp diz que o tamanho é exatamente o que falta, e não importa quanto crescer ela vai ficar
+            no mesmo tamanho da tela, com isso podemos tratar o scroll de forma diferente
+    -->
+    <!-- o atributo tools usado abaixo serve apenas para o AndroidStudio, quando subir a aplicação
+        não vai ter
+    -->
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_questions"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/margin_large"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintTop_toBottomOf="@+id/title_question_value"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:listitem="@layout/view_question_item"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
