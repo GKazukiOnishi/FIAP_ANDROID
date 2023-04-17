@@ -10,7 +10,9 @@ import br.com.fiap.chatgpt.data.TalkModel
 import br.com.fiap.chatgpt.databinding.ViewQuestionItemBinding
 
 class QuestionAdapter(
-    private val talkList: List<TalkModel>
+    private val talkList: List<TalkModel>,
+    private val onCardClick: (TalkModel) -> Unit //Unit porque a função lambda passada retorna nada, se fosse String seria String
+                                //os parênteses é como se fosse a assinatura da lambda, só passamos o tipo
 ) : RecyclerView.Adapter<QuestionAdapter.QuestionViewHolder>() {
 
     inner class QuestionViewHolder(
@@ -21,6 +23,9 @@ class QuestionAdapter(
 
         fun bind(item: TalkModel) {
             binding.questionTitle.text = item.question
+            binding.root.setOnClickListener {
+                onCardClick.invoke(item)
+            }
         }
     }
 
@@ -45,4 +50,5 @@ class QuestionAdapter(
     override fun getItemCount(): Int {
         return talkList.size
     }
+
 }

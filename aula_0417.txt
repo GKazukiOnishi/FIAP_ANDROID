@@ -1,0 +1,31 @@
+RecyclerView
+	Trabalha com Adapter, que é a classe que monta os itens, sabe remover, adicionar, configurar etc. a lista
+	
+	companion object -> static do java
+	
+	intent.extras?.getSerializable(TALK_MODEL_KEY) as TalkModel -> cast do Java
+	
+	private val talkModel by lazy { //tipo do talkModel não é obrigatório, ele deduz pelo retorno
+        intent.extras?.getSerializable(TALK_MODEL_KEY) as TalkModel //cast para TalkModel no Kotlin
+    } //poderíamos ter chamado direto, a diferença do by lazy é que ele só vai executar a lambda
+    // de atribuição dela quando a variável talkModel for utilizada
+	
+	onCardClick.invoke(item) -> forma de executar funções lambda passadas por parâmetro
+	
+	private val onCardClick: (TalkModel) -> Unit //Unit porque a função lambda passada retorna nada, se fosse String seria String
+                                //os parênteses é como se fosse a assinatura da lambda, só passamos o tipo
+	
+	::goToAnswersActivity //desse jeito passamos a função como parâmetro direto
+	
+	startActivity(
+		Intent(
+			this,
+			AnswersActivity::class.java
+		).putExtra(AnswersActivity.TALK_MODEL_KEY, talkModel) //talkModel está entrando como Serializable
+		//isso pode acontecer porque o TalkModel está extendendo Serializable
+		//putExtra é o que passa os parâmetros para a próxima activity
+		//TALK_MODEL_KEY fazendo import estático
+		//AnswersActivity.TALK_MODEL_KEY ou AnswersActivity.Companion.TALK_MODEL_KEY
+	)
+	
+	binding.buttonShareMessage.isVisible = item.hasShareAction //propriedade visibility da View, que consegue esconder ela

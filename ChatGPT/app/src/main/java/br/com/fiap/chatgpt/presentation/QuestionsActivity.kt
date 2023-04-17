@@ -24,16 +24,24 @@ class QuestionsActivity : AppCompatActivity() {
             mutableListOf<TalkModel>().apply {
                 addAll(TalkDataSource.talkList)
                 addAll(TalkDataSource.talkList)
-            }
+            },
+            ::goToAnswersActivity //desse jeito passamos a função como parâmetro direto
+//            { //abrindo e fechando chaves já temos uma função
+//                goToAnswersActivity() //função que chama a função goToAnswersActivity
+//            }
         )
     }
 
-    private fun goToAnswersActivity() {
+    private fun goToAnswersActivity(talkModel: TalkModel) {
         startActivity(
             Intent(
                 this,
                 AnswersActivity::class.java
-            )
+            ).putExtra(AnswersActivity.TALK_MODEL_KEY, talkModel) //talkModel está entrando como Serializable
+            //isso pode acontecer porque o TalkModel está extendendo Serializable
+            //putExtra é o que passa os parâmetros para a próxima activity
+            //TALK_MODEL_KEY fazendo import estático
+            //AnswersActivity.TALK_MODEL_KEY ou AnswersActivity.Companion.TALK_MODEL_KEY
         )
     }
 
