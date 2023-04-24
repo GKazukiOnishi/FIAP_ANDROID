@@ -1,0 +1,36 @@
+Fragments
+	Funciona como se fosse uma Activity
+	Também tem um ciclo de vida e representa uma parte da tela
+	Tem também outros ciclos só dele
+	
+	É tipo uma microactivity, mas não é uma Activity
+	
+	É útil para tratar mudanças de estados (retrato para paisagem)
+	
+	Ao clicar em menus diferentes, fragmentos diferentes são exibidos
+	fragmento deixa criar lógicas para chamadas de serviços
+	e são reutilizáveis em outras Activity(s)
+	
+	Activitys geralmente são criadas por fluxo
+	e os Fragmentos montam as etapas desse fluxo (Single Page Application mas não é por Application, é por necessidade mesmo)
+	
+	Ciclos de vida:
+		Ele segue o ciclo da Activity em alguns casos, ex: se destruir a Activity o Fragment vai junto
+		
+		mas tem ciclos específicos:
+			onAttach -> quando junta o Fragment na Activity
+			onDettach -> quando deslinkar o Fragment da Activity
+		
+		onAttach()
+		onCreate() -> junto da Activity
+		onCreateView() -> como se fosse o onCreate da Activity mas do Fragment apenas, ele é útil para os bind
+		onViewCreated() -> quando finaliza a construção, onCreateView, algo que roda após o onCreateView, é muito usado para o recarregamento
+			do Fragmento após mudar a orientanção da tela, é onde recuperamos o estado anterior (porque a tela remonta nesse processo)
+		onViewStateRestored() -> após restaurar o estado
+		onStart() -> mesmo da activity
+		onResume() -> mesmo da activity
+		onPause() ...
+		onStop() ...
+		onDestroyView() -> quando o Fragment é destruído
+		onDestroy () -> junto da Activity
+		onDettach() ->
