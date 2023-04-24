@@ -34,3 +34,5 @@ Fragments
 		onDestroyView() -> quando o Fragment é destruído
 		onDestroy () -> junto da Activity
 		onDettach() ->
+
+	
