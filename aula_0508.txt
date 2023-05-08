@@ -1,0 +1,75 @@
+Fragments
+	Usados para montar componentes de uma Activity
+	Quebra cabeça da tela
+	Permite criar SPA (Single Page Applications)
+	
+	Activities vão sendo montados uma em cima da outra
+	Podemos sair destruindo as que não aparecem após carregar a nova etc.
+	
+	Fragmentos também, podemos sair montando fragmentos em cima de outros, para voltar só eliminar o que estiver em cima, o anterior
+		ainda vai estar lá
+		
+	Navigation Architecture Component
+		Para gerenciar a navegação do App
+		Sabe controlar forma de ir para tela X
+		Voltar para Y
+		
+		Conceitos por trás dele:
+			Conjunto de bibliotecas, plugins e ferramentas que simplifica no Android
+			
+			Clique em botão que leva para tela etc.
+			
+			Se existir uma navegação mais complexa, temos os DeepLinks
+				DeepLinks - URL que ao clicar no celular, abre direto o App na tela que a URL indicar
+					Rota para uma tela do aplicativo, porém sem outras telas intermediárias, vai direto
+					
+			Ex: MercadoLivre
+				Gera URL que pode ser enviada para compartilhar um produto ou algo assim
+				Ela abre direto no produto
+				Navegação mais direta
+				Não é apenas clicar em um botão e ir para a tela estando no app, é algo mais complexo
+			
+		Arquitetura
+			Navigation Graph
+				Arquivo XML em que declaramos todos os fragmentos existentes da aplicação
+				Informações sobre o fragmento
+				Ações para abrir o fragmento
+				
+				* Informações do Fragmento ficam nele
+			NavHost
+				Container vazio que exibe os destinos da negação
+				Local em que a operação será realizada, parte que vai trocar de acordo com a localização
+				
+				name - nome da classe que vai instanciar o navHost em um fragmento (android tem um default)
+				defaultNavHost - booleano
+					Botão voltar gera um evento BackPress
+					Ao clicar nele estando em uma Activity voltamos para a Activity anterior
+					
+					Quando o atributo for true - Estou dizendo que a modificação dos Fragmentos vai seguir o comportamento da Activity
+						BackPress vai remover o Fragment e exibe o anterior, assim como o caso das Activities
+					false - Vai trocar a Activity
+				navGraph - Definimos o Navigation Graph que esse NavHost vai trabalhar
+					Os links definidos lá vão ter os comportamentos configurados no NavHost
+			NavController
+				Objeto que gerencia a navegação dentro do NavHost
+				Gerencia idas e vindas na navegação
+				Se formos para uma tela ou voltar, usamos um NavController
+				
+				Para obter um padrão, usamos a função findNavController
+					findNavController().navigate(R.id.action_to_RegisterCountryFragment) -> action com destination para o Fragmento correto
+		
+
+criar navigation directory
+criar navigation resource file
+configurar
+	app:startDestination="@+id/CountriesFragment" -> primeiro fragmento que ele vai exibir
+	
+	<fragment
+        android:id="@+id/RegisterCountryFragment"
+        android:name="br.com.fiap.countries.RegisterCountryFragment"
+        />
+	
+	<action
+        android:id="@+id/action_to_RegisterCountryFragment"
+        app:destination="@+id/RegisterCountryFragment"
+        /> -> ação com destino em outro fragmento
