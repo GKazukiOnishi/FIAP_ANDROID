@@ -73,3 +73,26 @@ configurar
         android:id="@+id/action_to_RegisterCountryFragment"
         app:destination="@+id/RegisterCountryFragment"
         /> -> ação com destino em outro fragmento
+
+NavHost	
+	<fragment
+        android:id="@+id/container_countries"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/navigation_graph"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+		
+NavController
+	binding.buttonAddCountry.setOnClickListener {
+		findNavController().navigate(R.id.action_to_RegisterCountryFragment)
+	}
+	
+	binding.buttonBackToCountries.setOnClickListener {
+		findNavController().navigateUp() -> volta para a navegação anterior
+	}

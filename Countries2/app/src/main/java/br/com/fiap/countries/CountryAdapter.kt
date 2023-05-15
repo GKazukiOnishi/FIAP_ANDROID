@@ -30,7 +30,7 @@ class CountryAdapter : RecyclerView.Adapter<CountryAdapter.CharacterItemViewHold
     }
 
     fun setData(list: List<CountryModel>) {
-        with(countryList) {
+        with(countryList) { //para limpar e modificar a lista da RecyclerView
             clear()
             addAll(list)
         }
@@ -47,6 +47,10 @@ class CountryAdapter : RecyclerView.Adapter<CountryAdapter.CharacterItemViewHold
             view.countryLanguageValue.text = countryInfo.language
             view.countryLocationValue.text = countryInfo.location
             view.countryCurrencyValue.text = countryInfo.currency
+
+            view.iconDelete.setOnClickListener {
+
+            }
         }
     }
 }
