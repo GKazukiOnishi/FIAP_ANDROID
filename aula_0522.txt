@@ -1,0 +1,29 @@
+<action
+	android:id="@+id/action_to_RegisterCountryFragment"
+	app:destination="@+id/RegisterCountryFragment"
+	app:popUpTo="@+id/CountriesFragment"
+	/>
+		
+Quando o navigateUp é chamado estando na Register, ele vai tirar o Fragmento Register e voltar para o popUpTo, tirando as telas da stack até chegar nela
+
+Se chamasse uma action direta voltando para a anterior, iria só adicionar na stack de telas e seria uma nova tela acima
+
+popUpToInclusive="true/false" -> true define que vai fechar tudo e inclusive a tela da popUpTo
+
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="CountriesStyles" parent="Theme.MaterialComponents" //reutiliza estsilos do Material, sem isso faz do zero
+        />
+</resources>
+
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="CountriesStyles" parent="Theme.MaterialComponents">
+        <item name="android:textSize">16sp</item>
+		<item name="background">@color/black</item>
+    </style>
+</resources>
+assim quem usar o estilo vai vir com essas propriedades configuradas
+
+ao usar o atributo style=@style/CountriesStyles ele vai configurar os componentes com essas props
+
