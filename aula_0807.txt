@@ -1,0 +1,171 @@
+Persistência de dados no Android
+
+	Tipos:
+		Arquivos do App
+			Armazenamento de arquivos para uso do app apenas. Ex: JSON, txt, mídia
+		Arquivos compartilhados
+			Arquivos que outros apps podem acessar, como mídia ou documentos
+		Preferences
+			Dados privados e primitivos em pares chave-valor
+				Shared Preferences, Data Store
+				Onde guarda que vc usa tema escuro
+		Banco de dados
+			Armazenamento de dados estruturados em um banco de dados privado do app
+			É mais leve que um Oracle ou outros, porque roda no celular. SQLite
+		
+	
+	SQLite no Android
+		No Android temos como usar coisas prontas para usar o SQLite, porém exige muito código até isso, além de que não indica erros nas queries.
+		Então vamos usar o Room Persistence Library
+		
+		Room Persistence Library
+			Arquitetura
+				Trabalha com as entidades -> classes mapeadas com as tabelas do banco
+				Data Access Objects -> com funções para acessar o banco de dados
+				Room Database -> classe usada para instanciar o próprio banco de dados na aplicação
+		
+			Componentes
+				@Entity -> para anotar uma classe como entidade
+				@DAO -> para configurar as interfaces que serão usadas para acessar o banco de dados
+				@Database -> representação do próprio banco de dados
+			
+				https://developer.android.com/training/data-storage/room
+				https://developer.android.com/training/data-storage/room/defining-data
+				https://developer.android.com/training/data-storage/room/accessing-data
+				
+			Para usar
+				no arquivo graddle do app
+				
+					plugins {
+						id 'com.android.application'
+						id 'org.jetbrains.kotlin.android'
+						id 'kotlin-kapt' --> AQUI
+						id("kotlin-parcelize") --> AQUI
+					}
+					
+					dependencies {
+
+						def room_version = '2.4.0-alpha04' //'2.3.0'
+						implementation "androidx.room:room-runtime:$room_version"
+						kapt "androidx.room:room-compiler:$room_version" --> ESSE BLOCO
+						implementation "androidx.room:room-ktx:$room_version"
+
+						implementation 'androidx.navigation:navigation-fragment-ktx:2.5.1'
+						implementation 'androidx.navigation:navigation-ui-ktx:2.5.1'
+						implementation 'androidx.core:core-ktx:1.7.0'
+						implementation 'androidx.appcompat:appcompat:1.6.1'
+						implementation 'com.google.android.material:material:1.8.0'
+						implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+						testImplementation 'junit:junit:4.13.2'
+						androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+						androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+					}
+			Exemplos
+			
+				Entity
+				
+					package br.com.fiap.countries.database
+
+					import android.os.Parcelable
+					import androidx.annotation.NonNull
+					import androidx.room.ColumnInfo
+					import androidx.room.Entity
+					import androidx.room.PrimaryKey
+					import kotlinx.parcelize.Parcelize
+
+					const val COUNTRY_MODEL_TABLE_NAME = "COUNTRY_TABLE"
+
+					@Entity(tableName = COUNTRY_MODEL_TABLE_NAME)
+					@Parcelize
+					data class CountryModel(
+						@PrimaryKey(autoGenerate = true)
+						var id: Int = 0,
+						@ColumnInfo
+						@NonNull
+						val name: String,
+						@ColumnInfo
+						@NonNull
+						val capital: String,
+						@ColumnInfo
+						@NonNull
+						val language: String,
+						@ColumnInfo
+						@NonNull
+						val currency: String,
+						@ColumnInfo
+						@NonNull
+						val location: String,
+					): Parcelable
+
+				DAO
+				
+					package br.com.fiap.countries.database
+
+					import androidx.room.Dao
+					import androidx.room.Delete
+					import androidx.room.Insert
+					import androidx.room.Query
+					import androidx.room.Update
+
+					@Dao
+					interface CountryDAO {
+
+						@Query("SELECT * FROM $COUNTRY_MODEL_TABLE_NAME ORDER BY name")
+						fun select() : List<CountryModel>
+
+						@Insert
+						fun insert(countryModel: CountryModel)
+
+						@Update
+						fun update(countryModel: CountryModel)
+
+						@Delete
+						fun delete(countryModel: CountryModel)
+
+					}
+				
+				Database
+				
+					package br.com.fiap.countries.database
+
+					import android.content.Context
+					import androidx.room.Database
+					import androidx.room.Room
+					import androidx.room.RoomDatabase
+
+					const val COUNTRY_DATABASE_NAME = "COUNTRY_DATABASE_NAME"
+
+					@Database(entities = [CountryModel::class], version = 1)
+					abstract class AppDatabase: RoomDatabase() {
+
+						abstract fun countryDAO(): CountryDAO
+
+						companion object {
+							private var INSTANCE: AppDatabase? = null
+
+							fun getDatabase(context: Context): AppDatabase {
+								val instance = Room.databaseBuilder(
+									context,
+									AppDatabase::class.java,
+									COUNTRY_DATABASE_NAME
+								).build()
+
+								return INSTANCE ?: let { //Se INSTANCE for null ?: vai chamar o let
+									INSTANCE = instance //vai definir o INSTANCE
+									instance //retornar instance
+								}
+							}
+						}
+
+					}
+				
+			Android -> funciona com Threads
+				A main thread é a principal, se ela travar o app trava
+				Por conta disso não podemos chamar o getDatabase na main thread
+				
+				gambiarra para deixar funcionar 
+					val instance = Room.databaseBuilder(
+						context,
+						AppDatabase::class.java,
+						COUNTRY_DATABASE_NAME
+					).allowMainThreadQueries().build() //para permitir usar a main thread, mas vai travar o app
