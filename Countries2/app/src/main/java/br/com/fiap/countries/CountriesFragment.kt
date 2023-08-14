@@ -6,12 +6,26 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import br.com.fiap.countries.database.AppDatabase
+import br.com.fiap.countries.database.CountryModel
 import br.com.fiap.countries.databinding.FragmentCountriesBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class CountriesFragment : Fragment() {
 
     lateinit var binding: FragmentCountriesBinding
-    private val countryAdapter = CountryAdapter()
+    private val appDb by lazy {
+        view?.context?.let {
+            AppDatabase.getDatabase(it)
+        }
+    }
+
+    private val countryAdapter by lazy {
+        CountryAdapter(
+            onDeleteListener = ::openConfirmationDeleteDialog,
+            onUpdateListener = ::updateCountry
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,7 +53,50 @@ class CountriesFragment : Fragment() {
         binding.recyclerViewCountries.setHasFixedSize(true)
         binding.recyclerViewCountries.adapter = countryAdapter
 
-        countryAdapter.setData(CountriesDataSource.countriesList)
+        getDataFromDatabase()
+    }
+
+    private fun updateCountry(countryModel: CountryModel) {
+        goToRegisterCountry(countryModel)
+    }
+
+    private fun goToRegisterCountry(countryModel: CountryModel? = null) {
+        findNavController().navigate(R.id.action_to_RegisterCountryFragment, RegisterCountryFragment.buildBundle(countryModel))
+    }
+
+    private fun deleteCountry(countryModel: CountryModel) {
+        appDb?.countryDAO()?.delete(countryModel)
+
+        SnackBarUtil.showSnackBar(
+            binding.recyclerViewCountries,
+            getString(R.string.register_country_success_deleted_message,
+                countryModel.name
+            )
+        )
+
+        getDataFromDatabase()
+    }
+
+    private fun getDataFromDatabase() {
+        appDb?.countryDAO()?.select()?.let {
+            countryAdapter.setData(it)
+        }
+    }
+
+    private fun openConfirmationDeleteDialog(countryModel: CountryModel) {
+        context?.let {
+            MaterialAlertDialogBuilder(it)
+                .setTitle(resources.getString(R.string.delete_dialog_title))
+                .setMessage(resources.getString(R.string.delete_dialog_message, countryModel.name))
+                .setNeutralButton(resources.getString(R.string.delete_cancel_label)) { dialog, _ ->
+                    dialog.cancel()
+                }
+                .setPositiveButton(resources.getString(R.string.delete_continue_label)) { dialog, _ ->
+                    deleteCountry(countryModel)
+                    dialog.dismiss()
+                }
+                .show()
+        }
     }
 
 }

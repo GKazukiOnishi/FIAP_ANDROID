@@ -1,16 +1,14 @@
-package br.com.fiap.countries.database
+private val appDb by lazy {
+	view?.context?.let {
+		AppDatabase.getDatabase(it)
+	}
+}
 
-import android.content.Context
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
-
-const val COUNTRY_DATABASE_NAME = "COUNTRY_DATABASE_NAME"
-
-@Database(entities = [CountryModel::class], version = 1)
-abstract class AppDatabase: RoomDatabase() {
+forma de acessar o AppDb nas classes após a inicialização do contexto, para não ter problema, já que o getDatabase depende do context
 
     abstract fun countryDAO(): CountryDAO
+
+Codificação de um singleton para ter acesso ao banco de dados
 
     companion object {
         private var INSTANCE: AppDatabase? = null
@@ -40,4 +38,8 @@ abstract class AppDatabase: RoomDatabase() {
         }
     }
 
-}
+A ideia é evitar criar várias instâncias do banco a cada iteração com a aplicação que chame o getDatabase
+
+Após ter o aplicativo rodando, através da aba App Inspection podemos acessar informações sobre o database da aplicação, permitindo ver os dados
+das tabelas
+

@@ -6,7 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.fiap.countries.databinding.ViewCountryItemBinding
 import br.com.fiap.countries.database.CountryModel
 
-class CountryAdapter : RecyclerView.Adapter<CountryAdapter.CharacterItemViewHolder>() {
+class CountryAdapter(
+    private val onDeleteListener: (CountryModel) -> Unit = {},
+    private val onUpdateListener: (CountryModel) -> Unit = {},
+) : RecyclerView.Adapter<CountryAdapter.CharacterItemViewHolder>() {
 
     private var countryList: MutableList<CountryModel> = mutableListOf()
 
@@ -49,7 +52,11 @@ class CountryAdapter : RecyclerView.Adapter<CountryAdapter.CharacterItemViewHold
             view.countryCurrencyValue.text = countryInfo.currency
 
             view.iconDelete.setOnClickListener {
+                onDeleteListener.invoke(countryInfo)
+            }
 
+            view.iconUpdate.setOnClickListener {
+                onUpdateListener.invoke(countryInfo)
             }
         }
     }

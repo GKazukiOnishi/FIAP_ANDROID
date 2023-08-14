@@ -21,6 +21,4 @@
         app:popUpTo="@+id/CountriesFragment"
         />
 
-
-
 </navigation>
