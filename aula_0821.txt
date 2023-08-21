@@ -1,0 +1,16 @@
+Criar novo projeto - Empty Views Activity
+
+API 26 Android 8
+
+br.com.fiap.nomeProjeto
+
+def room_version = '2.4.0-alpha04' //'2.3.0'
+implementation "androidx.room:room-runtime:$room_version"
+kapt "androidx.room:room-compiler:$room_version"
+implementation "androidx.room:room-ktx:$room_version"
+
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+}
