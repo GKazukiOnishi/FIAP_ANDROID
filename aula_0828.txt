@@ -1,0 +1,31 @@
+ViewModel
+	Celular passa por mudanças de configurações:
+		ex: mudar orientação, idioma etc.
+		
+	Ele é responsável por gerenciar dados referentes à tela do usuário, seus estados, a forma como é exibido
+	
+	Ao passar por esses mudanças de configuração, a activity passa por vários eventos
+	
+	(activity created)
+	onCreate
+	onStart
+	onResume
+	
+	(Activity rotated)
+	onPause
+	onStop
+	onDestroy
+	
+	(New Activity instance created)
+	onCreate
+	onStart
+	onResume
+	
+	(finish called)
+	onPause
+	onStop
+	onDestroy
+	
+	Esse é o default, mas usando view Model, ao mudar a configuração mantém o estado
+	
+	
