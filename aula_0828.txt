@@ -26,6 +26,6 @@ ViewModel
 	onStop
 	onDestroy
 	
-	Esse é o default, mas usando view Model, ao mudar a configuração mantém o estado
+	Esse é o default, mas usando View Model, ao mudar a configuração temos como manter o estado da aplicação
 	
 	
