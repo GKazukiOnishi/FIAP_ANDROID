@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.MovieDetailActivity">
+
+    <TextView
+        android:id="@+id/movie_detail_movie_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginVertical="@dimen/margin_large"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        style="@style/TextAppearance.AppCompat.Large"
+        android:text="Nome do filme aqui"
+        android:textAlignment="center"
+        />
+
+    <TextView
+        android:id="@+id/movie_detail_in_theaters_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/movie_detail_movie_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="@dimen/margin_large"
+        android:layout_marginHorizontal="@dimen/margin_large"
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:text="Em Cartaz/Fora de Cartaz"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:textAlignment="center"
+        />
+
+    <TextView
+        android:id="@+id/movie_detail_parental_rating_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/movie_detail_in_theaters_value"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="@dimen/margin_large"
+        android:layout_marginHorizontal="@dimen/margin_large"
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:text="@string/movie_detail_parental_rating_label"
+        android:textStyle="bold"
+        />
+    <TextView
+        android:id="@+id/movie_detail_parental_rating_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/movie_detail_parental_rating_label"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="@dimen/margin_small"
+        android:layout_marginHorizontal="@dimen/margin_large"
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:text="Ex: 12 anos"
+        />
+
+    <TextView
+        android:id="@+id/movie_detail_genre_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/movie_detail_parental_rating_value"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:layout_marginHorizontal="@dimen/margin_large"
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:text="@string/movie_detail_genre_label"
+        android:textStyle="bold"
+        />
+    <TextView
+        android:id="@+id/movie_detail_genre_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/movie_detail_genre_label"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="@dimen/margin_small"
+        android:layout_marginHorizontal="@dimen/margin_large"
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:text="Ex: Ação"
+        />
+
+    <TextView
+        android:id="@+id/movie_detail_duration_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/movie_detail_genre_value"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:layout_marginHorizontal="@dimen/margin_large"
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:text="@string/movie_detail_duration_label"
+        android:textStyle="bold"
+        />
+    <TextView
+        android:id="@+id/movie_detail_duration_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/movie_detail_duration_label"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="@dimen/margin_small"
+        android:layout_marginHorizontal="@dimen/margin_large"
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:text="Ex: 115 min"
+        />
+
+    <TextView
+        android:id="@+id/movie_detail_synopsis_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/movie_detail_duration_value"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:layout_marginHorizontal="@dimen/margin_large"
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:text="@string/movie_detail_synopsis_label"
+        android:textStyle="bold"
+        />
+    <TextView
+        android:id="@+id/movie_detail_synopsis_value"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/movie_detail_synopsis_label"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="@dimen/margin_small"
+        android:layout_marginHorizontal="@dimen/margin_large"
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:text="Ex: Bastante texto ........"
+        android:justificationMode="inter_word"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

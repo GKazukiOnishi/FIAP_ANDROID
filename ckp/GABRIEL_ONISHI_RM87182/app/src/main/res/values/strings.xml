@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">DigitalCinema</string>
+    <string name="filmes_cartaz_title_label">Filmes que estão em cartaz hoje:</string>
+    <string name="movie_detail_parental_rating_label">Classificação indicativa:</string>
+    <string name="movie_detail_parental_rating_label_complement"> anos</string>
+    <string name="movie_detail_genre_label">Gênero:</string>
+    <string name="movie_detail_duration_label">Duração:</string>
+    <string name="movie_detail_synopsis_label">Sinapse:</string>
+    <string name="movie_detail_in_theaters_label">Em Cartaz</string>
+    <string name="movie_detail_not_in_theaters_label">Fora de Cartaz</string>
+</resources>
