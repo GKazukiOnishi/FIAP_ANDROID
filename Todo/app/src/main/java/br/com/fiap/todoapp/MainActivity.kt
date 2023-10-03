@@ -4,20 +4,18 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.view.ViewCompat
 import androidx.core.view.children
+import androidx.lifecycle.lifecycleScope
 import br.com.fiap.todoapp.database.AppDatabase
 import br.com.fiap.todoapp.databinding.ActivityMainBinding
 import br.com.fiap.todoapp.databinding.ViewFilterItemBinding
 import com.google.android.material.chip.Chip
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     private val taskAdapter by lazy {
         TaskAdapter()
-    }
-
-    private val appDb by lazy {
-        AppDatabase.getDatabase(this)
     }
 
     private var selectedFilter: TaskStatus? = null
@@ -66,19 +64,21 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun getTaskList() {
-        taskAdapter.setData(appDb.taskDAO().selectAll())
+    private suspend fun getTaskList() {
+        taskAdapter.setData(AppDatabase.getDatabase(this).taskDAO().selectAll())
     }
 
-    private fun getTaskFromStatus(status: TaskStatus) {
-        taskAdapter.setData(appDb.taskDAO().selectByStatus(status))
+    private suspend fun getTaskFromStatus(status: TaskStatus) {
+        taskAdapter.setData(AppDatabase.getDatabase(this).taskDAO().selectByStatus(status))
     }
 
     private fun getFilteredList() {
-        if (selectedFilter == null) {
-            getTaskList()
-        } else {
-            getTaskFromStatus(selectedFilter!!)
+        lifecycleScope.launch {
+            if (selectedFilter == null) {
+                getTaskList()
+            } else {
+                getTaskFromStatus(selectedFilter!!)
+            }
         }
     }
 }

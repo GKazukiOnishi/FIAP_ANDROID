@@ -11,18 +11,18 @@ import br.com.fiap.todoapp.TaskStatus
 interface TaskDAO {
 
     @Query("SELECT * FROM $TASK_MODEL_TABLE_NAME ORDER BY id DESC")
-    fun selectAll() : List<TaskModel>
+    suspend fun selectAll() : List<TaskModel>
 
     @Query("SELECT * FROM $TASK_MODEL_TABLE_NAME WHERE status == :statusParam")
-    fun selectByStatus(statusParam: TaskStatus) : List<TaskModel>
+    suspend fun selectByStatus(statusParam: TaskStatus) : List<TaskModel>
 
     @Insert
-    fun insert(taskModel: TaskModel)
+    suspend fun insert(taskModel: TaskModel)
 
     @Update
-    fun update(taskModel: TaskModel)
+    suspend fun update(taskModel: TaskModel)
 
     @Delete
-    fun delete(taskModel: TaskModel)
+    suspend fun delete(taskModel: TaskModel)
 
 }

@@ -1,0 +1,48 @@
+Coroutine exemplo com Fibonacci
+
+	Dependências (necessário caso nenhuma lib contenha ele já)
+	
+		def lifecycle_version = "2.5.1"
+		def coroutine_version = "1.6.1"
+		implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version")
+		implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutine_version")
+		implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine_version")
+	
+	//Criando function para calcular no contexto diferente do Main, usando async para esperar a resposta da promisse
+	
+    suspend fun calculateFibonacci(sequenceNumber: Int): Int {
+        return withContext(Dispatchers.Default) {
+            async {
+                calculate(sequenceNumber)
+            }.await()
+        }
+    }
+
+    private fun calculate(sequenceNumber: Int): Int {
+        if (sequenceNumber <= 1) {
+            return sequenceNumber
+        }
+        return calculate(sequenceNumber - 1) + calculate(sequenceNumber - 2)
+    }
+	
+	// Configurando escopo para a corrotina ser executada sem travar a aplicação
+	
+    private fun incrementFibonacci(sequenceNumber: Int) {
+        lifecycleScope.launch {
+            binding.buttonIncrementFibonacci.isEnabled = false
+            val fibonacciNumber: Int = CoroutineFactory.calculateFibonacci(
+                sequenceNumber
+            )
+            binding.labelFibonacciNumber.text = "Valor do fibonacci: $fibonacciNumber"
+            binding.buttonIncrementFibonacci.isEnabled = true
+        }
+    }
+
+    private fun setupButtons() {
+        var countClick = binding.labelFibonacciSequence.text.toString().toInt()
+        binding.buttonIncrementFibonacci.setOnClickListener {
+            countClick++
+            incrementFibonacci(countClick)
+            binding.labelFibonacciSequence.text = "Sequência de fibonacci: $countClick"
+        }
+    }

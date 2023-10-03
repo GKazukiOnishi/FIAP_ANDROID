@@ -1,0 +1,101 @@
+Programação Assíncrona no Android
+	Síncrona -> roda a linha 1 antes da 2, então espera terminar para avançar
+	Assíncrona -> deixa rodando um processo geralmente mais pesado, e o código pode continuar ou esperar
+	
+	Quando abrimos um app, ele cria um processo em que as telas vão rodar, esse mesmo processo disponibiliza memória para os apps para rodar
+	A memória é compartilhada com outros processos
+	Por isso os menos importantes podem ir sendo eliminador pelo Android quando o sistema precisar de memória
+	
+	Android coloca cada processo em uma hierarquia de importância com base nos componentes executados nele
+	
+	Então temos:
+		Processos em primeiro plano - O aplicativo rodando na tela do usuário
+		Processo visível - O app está rodando uma tarefa mas não é o mais importante, então caso o sistema precise de memória, ele pode ser eliminado
+			por não estar sendo usado. É o caso de apps em execução mas que não estão selecionados
+		Processo de serviço - Processos de backup, coisas que rodam em background etc.
+		Processo armazenado em cache - Sistema está usando cache dos apps para ter uma melhor experiência, então isso pode ser eliminado se necessário,
+			só está lá para ajudar se precisar
+		
+		Quando um app está aberto, ele está rodando
+		Ao sair dele, fica em onPause
+		Caso essa activity pausada tenha uma baixa prioridade, pode ser eliminada
+		
+	Main Thread (ou thread de UI)
+		Thread principal, responsável por:
+			* Despachar eventos de renderização ou interação da tela
+			* Onde o app interage com os componentes visuais do Android
+			
+		Ou seja, caso ela seja usada para um serviço ou algo mais lento, se ela for bloqueada a tela vai parar e só continuar depois da finalização dessas
+			outras tarefas bloqueando a thread principal
+			
+		Seria a mensagem de: "NomeApp" não está respondendo. Gostaria de fechar ele?
+		
+	Tarefas de longa duraçãp
+		- Download de informações
+		- Acessar um servidor remoto, ex: APIs
+		- Ler ou escrever em um arquivo
+		- ... banco de dados
+		- Processamento pesado
+		
+		Como elas acabariam bloqueando a main thread, a ideia é executar elas de forma assíncrona
+		Assim não causando um bloqueio e rodando de forma que o usuário nem irá perceber de forma negativa
+		
+		O .allowMainThreadQueries() é o que permite rodar o banco na thread principal, então é uma má prática
+	
+	Por que async?
+		- Tempo limitado para tarefas mantendo o app responsivo
+		- Necessidade de realizar tarefas de longa duração
+		- Controle sobre como e onde as tarefas vão rodar
+	
+	Vamos usar Corrotinas para isso
+		Corrotina -> design pattern de concorrência no Android, indicado pelo Google
+			* Mantém o app responsivo durante gerenciamento de tarefas longas
+			* Simplifica o código assíncrona
+			* Codamos de forma sequencial mas mantendo a parte assíncrona da execução
+			* Mais fácil de tratar try/catch
+	
+		A Corrotina consegue rodar as coisas de forma sucessiva, como se fosse síncrona, mas esperando a execução, todavia a thread não vai bloquear
+
+		
+	Passos:
+		Definir function com o modificador "suspend": suspend fun
+			O suspend sozinho não vai rodar o código de forma assíncrona
+		Para isso usamos os Dispatchers, que indicam onde a Corrotina vai rodar
+		Existem 3 lugares:
+			Dispatchers.Main -> coisas da interface do usuário, usado para fazer algo na tela
+			Dispatchers.IO -> usado para buscar dados no disco ou rede
+			Dispatchers.Default -> para tarefas que usem muito processamento
+			
+	Coroutine Scope
+		Kotlin não deixa rodar uma Corrotina sem escopo
+		Isso acontece porque o sistema precisa gerenciar a quantidade de corrotinas e também para eliminar coisas desnecessárias
+		3 tipos de escopo existem para isso:
+			GlobalScope -> pode ser usado em qlqr lugar do app
+			lifecycleScope -> dentro de Activities e Fragmentes, componentes com ciclo de vida
+			viewModelScope -> escopo usado na classe de ViewModel
+			
+		lifecycleScope.launch {
+			... código a ser executado
+		} -> cria uma corrotina que não retorna nenhuma valor para o escopo
+				eles vão rodar enquanto o componente pai estiver rodando
+				o onDestroy do pai elimina a corrotina junto
+		sendo um GlobalScope, ele rodaria mesmo sem a activity
+		no viewModelScope, ela é finalizada quando o viewModel for finalizado também
+		
+		GlobalScope.async {
+			... código a ser executado
+		}.await() -> espera rodar e então retorna o objeto após a execução ter finalizado
+			sem o .await() temos como retorno uma Promisse, que é a ideia de ter algo que pode ser finalizado ou não, uma promessa apenas
+			o .await() faz esperar a execução, então retorna o valor final da promessa já cumprida
+		
+		* launch -> void, só vai rodar e retornar nada
+		* async -> tem um retorno
+
+	Funcionamento da Coroutine
+		suspend -> pausa a execução de uma corrotina e salva o estado onde parou
+		resume -> automaticamente carrega o estado salvo e continua a execução no ponto em que tinha sido suspenso
+		
+		Então, quando algo async é chamado, o código fica suspenso, permitindo outras coisas serem executadas durante isso
+		O código só volta a rodar quando é finalizada e roda o resume do código
+		
+	Coroutine -> está dentro da lib do room, então só de ter ele já funciona
