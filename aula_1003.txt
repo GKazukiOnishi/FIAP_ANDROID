@@ -1,0 +1,47 @@
+Fibonacci com ViewModel
+
+	Dependências
+	
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1'
+    implementation 'androidx.activity:activity-ktx:1.7.2'
+	
+	MutableLiveData
+		-> Alteração que permite que uma modificação no valor da variável avise os lugares que estiverem observando ele
+		
+		var fibonacciIsFinished = MutableLiveData<Int>()
+		
+		suspend fun calculateFibonacci(sequenceNumber: Int): Int {
+			return withContext(Dispatchers.Default) {
+				val result = async { //esse aqui na rodar na thread default
+					calculate(sequenceNumber)
+				}.await()
+
+				withContext(Dispatchers.Main) { //esse pedaço só vai rodar na thread principal, porque queremos ver o snackbar aparecendo e o observer está nessa thread
+					fibonacciIsFinished.value = result //caso esteja no contexto errado a aplicação fecha e dá erro
+				}
+
+				result
+			}
+		}
+		
+		private fun setObservers() { //this é o lifecycle owner, que pode ser activity, fragment etc.
+			viewModel.fibonacciIsFinished.observe(this, Observer { fibonacciNumber -> //recebe como param o live data
+				Snackbar.make(binding.buttonIncrementFibonacci, "$fibonacciNumber", Snackbar.LENGTH_SHORT) //executa algo no onChange do live data
+			})
+		}
+		
+	Cancelamento de coroutine
+	
+        binding.buttonStopFibonacci.setOnClickListener { 
+            binding.buttonIncrementFibonacci.isEnabled = true
+            lifecycleScope.cancel()
+        }
+	
+	Delay
+	
+            val result = async {
+                delay(15000) -> para fazer esperar 15 segundos e depois calcular
+                calculate(sequenceNumber)
+            }.await()
+			
+	Obs: Pro checkpoint usar propriedade progress das barras de progresso (0 a 100)
