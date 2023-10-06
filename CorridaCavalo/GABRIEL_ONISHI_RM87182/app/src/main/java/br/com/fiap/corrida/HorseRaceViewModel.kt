@@ -17,11 +17,13 @@ class HorseRaceViewModel : ViewModel() {
         greenHorseProgress.value = 0
         withContext(Dispatchers.Default) {
             while (redHorseProgress.value!! < 100 && greenHorseProgress.value!! < 100) {
+                val randomRed = Random.nextInt(0, 21)
+                val randomGreen = Random.nextInt(0, 21)
                 delay(1500)
 
                 withContext(Dispatchers.Main) {
-                    redHorseProgress.value = redHorseProgress.value!! + Random.nextInt(0, 21)
-                    greenHorseProgress.value = greenHorseProgress.value!! + Random.nextInt(0, 21)
+                    redHorseProgress.value = redHorseProgress.value!! + randomRed
+                    greenHorseProgress.value = greenHorseProgress.value!! + randomGreen
                 }
             }
         }
