@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">GABRIEL_ONISHI_RM87182</string>
+    <string name="title">Corrida de cavalos</string>
+    <string name="start_button_label">INICIAR</string>
+    <string name="stop_button_label">PARAR</string>
+    <string name="red_horse_name">Cavalo Vermelho</string>
+    <string name="green_horse_name">Cavalo Verde</string>
+</resources>
