@@ -5,4 +5,6 @@
     <string name="stop_button_label">PARAR</string>
     <string name="red_horse_name">Cavalo Vermelho</string>
     <string name="green_horse_name">Cavalo Verde</string>
+    <string name="winner_text">O %1$s venceu!</string>
+    <string name="tie_text">Ocorreu um empate!</string>
 </resources>

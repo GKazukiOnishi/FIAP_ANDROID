@@ -68,7 +68,6 @@
         android:layout_marginHorizontal="@dimen/spacing_md"
         app:trackColor="@color/red_shadow"
         app:indicatorColor="@color/red"
-        android:indeterminate="true"
         />
 
     <TextView
@@ -96,7 +95,6 @@
         android:layout_marginHorizontal="@dimen/spacing_md"
         app:trackColor="@color/green_shadow"
         app:indicatorColor="@color/green"
-        android:indeterminate="true"
         />
 
     <TextView
