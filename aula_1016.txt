@@ -1,0 +1,11 @@
+Projeto Marvel
+	Vamos usar API, carregar imagens de URLs etc.
+	
+	Lembrar de criar keys.properties -> arquivo com keys que não é commitado, porque tem as chaves das APIS
+	
+	O projeto gera automaticamente uma classe a partir dele, então precisa para rodar
+	
+MARVEL_API_KEY="b27532c12ae0990c613e45d77623be5e"
+MARVEL_PRIVATE_KEY="27e9417bdd720e94c2d4837e03f43b4410ab3cc1"
+
+	
