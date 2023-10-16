@@ -8,4 +8,91 @@ Projeto Marvel
 MARVEL_API_KEY="b27532c12ae0990c613e45d77623be5e"
 MARVEL_PRIVATE_KEY="27e9417bdd720e94c2d4837e03f43b4410ab3cc1"
 
+    buildTypes {
+        debug {
+            minifyEnabled false
+            buildConfigField("String", "MARVEL_API_KEY", apikeyProperties['MARVEL_API_KEY'])
+            buildConfigField("String", "MARVEL_PRIVATE_KEY", apikeyProperties['MARVEL_PRIVATE_KEY'])
+        }
+        release {
+            minifyEnabled false
+            buildConfigField("String", "MARVEL_API_KEY", apikeyProperties['MARVEL_API_KEY'])
+            buildConfigField("String", "MARVEL_PRIVATE_KEY", apikeyProperties['MARVEL_PRIVATE_KEY'])
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+	
+	Forma de diferenciar build para release e debug, reduzindo tempo de desenvolvimento para ficar ofuscando ou escondendo de outras formas
+	
+	Dependências
+		retrofit -> chamadas http
+		picasso -> carregamento de imagens por URL
+		
+	Precisa rodar rebuild (sync etc.) do projeto para criar classes autogeradas (generated, source, buildConfig)
+	
+	Como o app vai usar internet, precisa dar permissão ao app para usar isso
+	
+		Existem as permissões solicitadas na instalação do aplicativo, baixando ele já verifica e solicita
+			Internet por exemplo, 99% pede
+		Também tem as que são solicitadas em Runtime
+		
+		Lá no manifest colocamos:
+			<?xml version="1.0" encoding="utf-8"?>
+			<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+				xmlns:tools="http://schemas.android.com/tools"
+				package="br.com.fiap.marvelapp"
+				>
+
+				<uses-permission android:name="android.permission.INTERNET"/> ***********************
+				<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/> ***********
+
+				<application
+					android:allowBackup="true"
+					android:dataExtractionRules="@xml/data_extraction_rules"
+					android:fullBackupContent="@xml/backup_rules"
+					android:icon="@mipmap/ic_launcher"
+					android:label="@string/app_name"
+					android:roundIcon="@mipmap/ic_launcher_round"
+					android:supportsRtl="true"
+					android:theme="@style/Theme.MarvelApp"
+					tools:targetApi="31">
+					<activity
+						android:name=".presentation.MainActivity"
+						android:exported="true"
+						android:label="@string/app_name"
+						android:theme="@style/Theme.MarvelApp.NoActionBar">
+						<intent-filter>
+							<action android:name="android.intent.action.MAIN" />
+
+							<category android:name="android.intent.category.LAUNCHER" />
+						</intent-filter>
+					</activity>
+				</application>
+
+			</manifest>
+		
+	Pastas do projeto
+		presentation -> fragment, activities, adapters -> parte da tela
+		data -> chamadas de banco de dados, serviços, acesso a dados
+		domain -> contém regras de negócio do aplicativo
+		
+		Quando testamos dá para separa por camada etc.
+		Essas camadas são as mais comuns
+		
+	Retrofit
+		Lib que vai transformar a chamada de API HTTP em Kotlin, vai criar classes modelos com atributos e etc., convertendo automaticamente
+		
+		Client Http para Android
+		
+		Ele faz as chamadas HTTPs, recebendo parâmetros e headers
+		Recebe a response via JSON, e então entra uma outra lib chamada Gson
+		
+		Usando anotações em uma interface ele já consegue fazer o seu trabalho
+	Gson
+		Lib do Google que consegue converter o JSON em um modelo Kotlin ou Java
+	
+		Com essa classe convertida, podemos jogar na aplicação para conversar com o projeto e depois mostrar na tela
+	
+		Essa lib faz o caminho inverso também, consegue pegar a classe Kotlin e transformar em JSON
+	
 	
