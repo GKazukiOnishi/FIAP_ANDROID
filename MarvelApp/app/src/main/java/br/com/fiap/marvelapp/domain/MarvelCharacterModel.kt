@@ -1,6 +1,8 @@
 package br.com.fiap.marvelapp.domain
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
 data class MarvelCharacterModel(
     @SerializedName("data")
@@ -9,25 +11,27 @@ data class MarvelCharacterModel(
 
 data class MarvelCharacterDataModel(
     @SerializedName("results")
-    val results: List<MarvelCharacterModelDataResultModel>
+    val results: List<MarvelCharacterDataResultModel>
 )
 
-data class MarvelCharacterModelDataResultModel(
+@Parcelize
+data class MarvelCharacterDataResultModel(
     @SerializedName("id")
     val id: Int?,
     @SerializedName("name")
     val name: String?,
     @SerializedName("thumbnail")
-    val thumbnail: MarvelCharacterModelDataResultThumbnailModel
-) {
+    val thumbnail: MarvelCharacterDataResultThumbnailModel
+) : Parcelable {
     fun getThumbnailFullUrl(): String {
         return "${thumbnail?.path?.replace("http", "https")}.${thumbnail?.extension}"
     }
 }
 
-data class MarvelCharacterModelDataResultThumbnailModel(
+@Parcelize
+data class MarvelCharacterDataResultThumbnailModel(
     @SerializedName("path")
     val path: String?,
     @SerializedName("extension")
     val extension: String?
-)
+) : Parcelable

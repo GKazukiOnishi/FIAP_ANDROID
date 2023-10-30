@@ -1,5 +1,6 @@
 package br.com.fiap.marvelapp.data
 
+import br.com.fiap.marvelapp.domain.ComicModel
 import br.com.fiap.marvelapp.domain.MarvelCharacterModel
 import retrofit2.Response
 import retrofit2.http.GET
@@ -14,5 +15,13 @@ interface MarvelService {
         @Query("hash") hash: String,
         @Query("offset") offset: Int = 1241
     ) : Response<MarvelCharacterModel>
+
+    @GET("/v1/public/characters/{characterId}/comics")
+    suspend fun listComics(
+        @Query("timestamp") timestamp: String,
+        @Query("apiKey") apiKey: String,
+        @Query("hash") hash: String,
+        @Query("characterId") characterId: Int
+    ) : Response<ComicModel>
 
 }

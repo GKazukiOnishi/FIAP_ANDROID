@@ -4,17 +4,19 @@ import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import br.com.fiap.marvelapp.R
 import br.com.fiap.marvelapp.databinding.ViewCharacterItemBinding
-import br.com.fiap.marvelapp.domain.MarvelCharacterModelDataResultModel
+import br.com.fiap.marvelapp.domain.MarvelCharacterDataResultModel
+import br.com.fiap.marvelapp.presentation.CharacterDetailFragment.Companion.buildBundle
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Target
 import java.lang.Exception
 
 class CharacterListAdapter : RecyclerView.Adapter<CharacterListAdapter.CharacterItemViewHolder>() {
 
-    private val characterList: MutableList<MarvelCharacterModelDataResultModel> = mutableListOf()
+    private val characterList: MutableList<MarvelCharacterDataResultModel> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterItemViewHolder {
         val binding = ViewCharacterItemBinding.bind(
@@ -34,7 +36,7 @@ class CharacterListAdapter : RecyclerView.Adapter<CharacterListAdapter.Character
         return characterList.size
     }
 
-    fun setData(list: List<MarvelCharacterModelDataResultModel>) {
+    fun setData(list: List<MarvelCharacterDataResultModel>) {
         characterList.clear()
         characterList.addAll(list)
         notifyDataSetChanged()
@@ -44,14 +46,14 @@ class CharacterListAdapter : RecyclerView.Adapter<CharacterListAdapter.Character
         private val view: ViewCharacterItemBinding
     ) : RecyclerView.ViewHolder(view.root) {
 
-        fun bindView(character: MarvelCharacterModelDataResultModel) {
+        fun bindView(character: MarvelCharacterDataResultModel) {
             with(view.root) {
-//                setOnClickListener {
-//                    findNavController().navigate(
-//                        R.id.action_character_list_to_character_detail,
-//                        buildBundle(character)
-//                    )
-//                }
+                setOnClickListener {
+                    findNavController().navigate(
+                        R.id.action_character_list_to_character_detail,
+                        buildBundle(character)
+                    )
+                }
             }
             view.characterNameValue.text = character.name
 
