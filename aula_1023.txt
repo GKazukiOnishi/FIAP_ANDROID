@@ -1,0 +1,8 @@
+ViewModel
+	Guarda estados quando há uma mudança de configuração no celular
+	
+	Por exemplo, se mudar orientação, vai perder toda a configuração da tela
+	
+	Quando a config muda, ela até é recriada, a viewModel, mas com as mesmas informações da instância anterior
+	
+	Não necessarimente precisamos usar MutableLiveData, a vantagem dele é que consegue notificar, então é útil com códigos assíncronas
